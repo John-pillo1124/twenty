@@ -1,6 +1,7 @@
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { PageLayoutWidgetForbiddenDisplay } from '@/page-layout/widgets/components/PageLayoutWidgetForbiddenDisplay';
 import { PageLayoutWidgetInvalidConfigDisplay } from '@/page-layout/widgets/components/PageLayoutWidgetInvalidConfigDisplay';
+import { PageLayoutWidgetRecordContextRequiredDisplay } from '@/page-layout/widgets/components/PageLayoutWidgetRecordContextRequiredDisplay';
 import { WidgetContentRenderer } from '@/page-layout/widgets/components/WidgetContentRenderer';
 import { WidgetComponentInstanceContext } from '@/page-layout/widgets/states/contexts/WidgetComponentInstanceContext';
 import { type WidgetAccessDenialInfo } from '@/page-layout/widgets/types/WidgetAccessDenialInfo';
@@ -9,9 +10,10 @@ import { type WidgetCardVariant } from '@/page-layout/widgets/types/WidgetCardVa
 import { WidgetCard } from '@/page-layout/widgets/widget-card/components/WidgetCard';
 import { WidgetCardContent } from '@/page-layout/widgets/widget-card/components/WidgetCardContent';
 import { WidgetCardHeader } from '@/page-layout/widgets/widget-card/components/WidgetCardHeader';
+import { RecordContextRequiredError } from '@/ui/layout/contexts/RecordContextRequiredError';
 import { styled } from '@linaria/react';
 import { type MouseEvent, useContext } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, type FallbackProps } from 'react-error-boundary';
 import { IconLock } from 'twenty-ui/display';
 import { ThemeContext } from 'twenty-ui/theme-constants';
 import { WidgetType } from '~/generated-metadata/graphql';
@@ -21,6 +23,13 @@ const StyledNoAccessContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+const WidgetErrorFallback = ({ error }: FallbackProps) => {
+  if (error instanceof RecordContextRequiredError) {
+    return <PageLayoutWidgetRecordContextRequiredDisplay />;
+  }
+  return <PageLayoutWidgetInvalidConfigDisplay />;
+};
 
 type WidgetCardShellProps = {
   widget: PageLayoutWidget;
@@ -119,7 +128,7 @@ export const WidgetCardShell = ({
         >
           {hasAccess ? (
             <ErrorBoundary
-              FallbackComponent={PageLayoutWidgetInvalidConfigDisplay}
+              FallbackComponent={WidgetErrorFallback}
               resetKeys={[
                 widget.id,
                 widget.configuration,
