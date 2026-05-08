@@ -25,6 +25,15 @@ info()  { echo "=> $*"; }
 ok()    { echo "   done: $*"; }
 fail()  { echo "   FAIL: $*" >&2; }
 
+cd "$REPO_ROOT"
+
+if ! command -v node &>/dev/null; then
+  fail "Node.js is required. Use 'nvm use' to install/activate Node $(cat .nvmrc), then enable Yarn from packageManager (${REPO_ROOT}/package.json)."
+  exit 1
+fi
+
+node ./scripts/check-toolchain.cjs --skip-package-manager
+
 # --------------- detection helpers ---------------
 has_local_pg() {
   command -v pg_ctlcluster &>/dev/null && pg_lsclusters 2>/dev/null | grep -q "16"

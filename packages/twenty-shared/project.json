@@ -74,7 +74,14 @@
     },
     "typecheck": {},
     "test": {},
-    "lint": { "options": {}, "configurations": { "fix": {} } },
+    "lint": {
+      "dependsOn": ["twenty-oxlint-rules:build"],
+      "options": {},
+      "configurations": { "fix": {} }
+    },
+    "lint:diff-with-main": {
+      "dependsOn": ["twenty-oxlint-rules:build"]
+    },
     "fmt": { "options": { "files": "src" }, "configurations": { "fix": {} } }
   }
 }

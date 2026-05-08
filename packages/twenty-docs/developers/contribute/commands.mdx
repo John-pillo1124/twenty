@@ -6,6 +6,18 @@ description: Useful commands for developing Twenty.
 
 Commands can be run from the repository root using `npx nx`. Use `npx nx run {project}:{command}` for explicit targeting.
 
+Before running these commands on a fresh clone:
+
+```bash
+nvm use                     # .nvmrc -> Node 24.5.0
+corepack enable
+corepack prepare yarn@4.13.0 --activate
+yarn install
+bash packages/twenty-utils/setup-dev-env.sh
+```
+
+The repository validates the Node version during `yarn install` and again in `setup-dev-env.sh`, so fix any toolchain mismatch before running Nx commands.
+
 ## Starting the App
 
 ```bash

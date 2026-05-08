@@ -52,7 +52,7 @@
           "command": "npx oxlint --fix -c .oxlintrc.json . && prettier . --write --cache --cache-location ../../.cache/prettier/{projectRoot} --cache-strategy metadata"
         }
       },
-      "dependsOn": ["^build", "twenty-oxlint-rules:build"]
+      "dependsOn": ["^build"]
     },
     "lint:diff-with-main": {
       "executor": "nx:run-commands",

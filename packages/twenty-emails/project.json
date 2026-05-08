@@ -27,7 +27,12 @@
       }
     },
     "typecheck": {},
-    "lint": {},
+    "lint": {
+      "dependsOn": ["twenty-oxlint-rules:build"]
+    },
+    "lint:diff-with-main": {
+      "dependsOn": ["twenty-oxlint-rules:build"]
+    },
     "fmt": {
       "options": {
         "files": "src"

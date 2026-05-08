@@ -72,6 +72,20 @@ See the [app development guide](https://docs.twenty.com/developers/extend/apps/g
 
 Run Twenty on your own infrastructure with [Docker Compose](https://docs.twenty.com/developers/self-host/capabilities/docker-compose), or contribute locally via the [local setup guide](https://docs.twenty.com/developers/contribute/capabilities/local-setup).
 
+### <img src="./packages/twenty-website-new/public/images/readme/code-icon.svg" width="14" height="14"/> Contribute locally
+
+Use the pinned toolchain before running any Nx, Jest, Vite, or lint command:
+
+```bash
+nvm use                     # .nvmrc -> Node 24.5.0
+corepack enable
+corepack prepare yarn@4.13.0 --activate
+yarn install
+bash packages/twenty-utils/setup-dev-env.sh
+```
+
+`yarn install` fails fast on unsupported Node/Yarn versions, and `setup-dev-env.sh` validates the Node version again before starting local services.
+
 <br />
 <br />
 

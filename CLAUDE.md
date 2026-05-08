@@ -8,6 +8,17 @@ Twenty is an open-source CRM built with modern technologies in a monorepo struct
 
 ## Key Commands
 
+### Required Toolchain
+```bash
+nvm use                     # uses .nvmrc -> Node 24.5.0
+corepack enable
+corepack prepare yarn@4.13.0 --activate
+yarn install
+bash packages/twenty-utils/setup-dev-env.sh
+```
+
+The repo fails fast on unsupported Node versions during `yarn install` and during `setup-dev-env.sh`. If either check fails, switch to Node `24.5.0` first.
+
 ### Development
 ```bash
 # Start development environment (frontend + backend + worker)
@@ -208,7 +219,7 @@ All dev environments (Claude Code web, Cursor, local) use one script:
 bash packages/twenty-utils/setup-dev-env.sh
 ```
 
-This handles everything: starts Postgres + Redis (auto-detects local services vs Docker), creates databases, and copies `.env` files. Idempotent — safe to run multiple times.
+Run it after `nvm use`, `corepack enable`, and `yarn install`. The script validates Node before touching local services, then starts Postgres + Redis (auto-detects local services vs Docker), creates databases, and copies `.env` files. Idempotent — safe to run multiple times.
 
 - `--docker` — force Docker mode (uses `packages/twenty-docker/docker-compose.dev.yml`)
 - `--down` — stop services
